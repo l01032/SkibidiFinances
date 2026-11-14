@@ -5,7 +5,6 @@ import { Card, Empty, Field, Icon, MoneyInput, Segmented, cx, useConfirm } from 
 import { LineChart } from '../components/charts';
 import { available, averageNet, futureValue, requiredMonthly, totalSaved, totalsFor } from '../lib/calc';
 import { addMonths, currentMonth, fmtMoney, fmtPct, monthLabel, parseAmount, toNum } from '../lib/format';
-import { buildDemo } from '../lib/demo';
 import { exportCSV, exportJSON, readFileText } from '../lib/export';
 import { sanitize } from '../lib/storage';
 
@@ -319,23 +318,6 @@ function DataPanel() {
     }
   };
 
-  const loadDemo = async () => {
-    const ok =
-      !hasData ||
-      (await confirm({
-        title: 'Cargar datos de demostración',
-        message: 'Esto reemplazará tus datos actuales por datos de ejemplo. Descarga un respaldo antes si quieres conservarlos.',
-        confirmText: 'Cargar demo',
-        danger: false,
-      }));
-    if (ok) {
-      const demo = buildDemo(data.settings.theme);
-      actions.replace(demo);
-      setBalance(String(demo.settings.initialBalance));
-      toast('Datos de demostración cargados');
-    }
-  };
-
   const wipe = async () => {
     if (
       await confirm({
@@ -383,13 +365,6 @@ function DataPanel() {
         <button className="btn-ghost" onClick={() => fileRef.current?.click()}>
           <Icon name="upload" />
           Elegir archivo de respaldo
-        </button>
-      </Section>
-
-      <Section title="Datos de demostración" text="Carga ejemplos para explorar la app. Se marcan como demo y los puedes borrar cuando quieras.">
-        <button className="btn-ghost" onClick={loadDemo}>
-          <Icon name="sparkles" />
-          Cargar datos de demostración
         </button>
       </Section>
 
