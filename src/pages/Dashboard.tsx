@@ -19,10 +19,9 @@ import {
   totalsFor,
 } from '../lib/calc';
 import { useCountUp } from '../lib/hooks';
-import { buildDemo } from '../lib/demo';
 
 export default function Dashboard() {
-  const { data, actions } = useStore();
+  const { data } = useStore();
   const { month, openTxForm } = useUI();
   const { transactions, budgets, goals, settings } = data;
 
@@ -57,16 +56,12 @@ export default function Dashboard() {
         <Empty
           icon="wallet"
           title="Empieza con tu primer movimiento"
-          text="Registra un ingreso o un gasto y el panel se llenará solo. Si prefieres explorar primero, carga datos de demostración; puedes borrarlos cuando quieras."
+          text="Registra un ingreso o un gasto y el panel se llenará solo."
         >
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             <button className="btn-primary" onClick={() => openTxForm()}>
               <Icon name="plus" />
               Registrar movimiento
-            </button>
-            <button className="btn-ghost" onClick={() => actions.replace(buildDemo(settings.theme))}>
-              <Icon name="sparkles" />
-              Cargar datos de demostración
             </button>
           </div>
         </Empty>
